@@ -24,7 +24,7 @@ import (
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/FullTag/pulumi-onepassword/provider/pkg/version"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/1Password/terraform-provider-onepassword"
+	"github.com/1Password/terraform-provider-onepassword/onepassword"
 )
 
 // all of the token components used below.
