@@ -60,7 +60,7 @@ func Provider() tfbridge.ProviderInfo {
 		// Change this to your personal name (or a company name) that you
 		// would like to be shown in the Pulumi Registry if this package is published
 		// there.
-		Publisher: "Pulumi",
+		Publisher: "FullTag",
 		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
 		// if this package is published there.
 		//
@@ -77,11 +77,11 @@ func Provider() tfbridge.ProviderInfo {
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
 		Keywords:   []string{"pulumi", "onepassword", "category/cloud"},
 		License:    "Apache-2.0",
-		Homepage:   "https://www.pulumi.com",
+		Homepage:   "https://fulltag.dev",
 		Repository: "https://github.com/FullTag/pulumi-onepassword",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "",
+		GitHubOrg: "1Password",
 		Config:    map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
@@ -94,6 +94,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		PreConfigureCallback: preConfigureCallback,
 		Resources:            map[string]*tfbridge.ResourceInfo{
+			"onepassword_item":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "OnepasswordItem")},
 			// Map each resource in the Terraform provider to a Pulumi type. Two examples
 			// are below - the single line form is the common case. The multi-line form is
 			// needed only if you wish to override types or other default options.
@@ -108,6 +109,8 @@ func Provider() tfbridge.ProviderInfo {
 			// },
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
+			"onepassword_item":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getOnepasswordItem")},
+			"onepassword_vault":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getOnepasswordVault")},
 			// Map each resource in the Terraform provider to a Pulumi function. An example
 			// is below.
 			// "aws_ami": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getAmi")},
@@ -153,7 +156,7 @@ func Provider() tfbridge.ProviderInfo {
 	// For more information, please reference: https://pkg.go.dev/github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge#ProviderInfo.ComputeTokens
 	prov.MustComputeTokens(tokens.SingleModule("onepassword_", mainMod,
 		tokens.MakeStandard(mainPkg)))
-	prov.MustApplyAutoAliasing()
+	// prov.MustApplyAutoAliasing()
 	prov.SetAutonaming(255, "-")
 
 	return prov
